@@ -1,0 +1,26 @@
+<ui:composition template="/WEB-INF/templates/layout-login.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="formLogin">
+            <p:growl autoUpdate="true"/>
+            <div style="width: 400px; margin: auto; margin-top: 100px;">
+                <p:panel style="text-align: center;">
+                    <f:facet name="header">Login</f:facet>
+                    <h:panelGrid columns="2" width="100%" style="margin-bottom: 20px; margin-top: 10px;">
+                        Login:
+                        <h:inputText id="txtLogin" value="#{usuarioBean.usuario.email}" required="true" label="Login"
+                            style="#{ component.valid ? '' : 'border-color:red;'}"/>
+                        Senha:
+                        <h:inputSecret id="txtSenha" value="#{usuarioBean.usuario.senha}" required="true" label="Senha"
+                            style="#{ component.valid ? '' : 'border-color:red;'}"/>
+                    </h:panelGrid>
+                    <p:commandButton value="Logar" action="#{usuarioBean.login()}" ajax="false"/>
+                </p:panel>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

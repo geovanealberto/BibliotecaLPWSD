@@ -1,2 +1,2 @@
-# BibliotecaLPWSD
-Biblioteca LPWSD
+# LPWSD
+Código de Exemplo  de LPWSD

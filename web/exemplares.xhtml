@@ -1,0 +1,110 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h2 class="page-header">Gerenciar Exemplares</h2>
+        <br/>
+        <h:form id="formPrincipal">
+            <div align="center">
+                
+                <p:dataTable var="lista" value="#{exemplarBean.exemplares}"
+                             id="tabelaExemplares" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
+
+                    <p:column headerText="Código" sortBy="#{lista.idtbExemplar}" filterBy="#{lista.idtbExemplar}">
+                        <h:outputText value="#{lista.idtbExemplar}" />
+                    </p:column>
+                    
+                    <p:column headerText="Circular" sortBy="#{lista.circular}" filterBy="#{lista.circular}">
+                        <h:outputText value="#{lista.circular}" />
+                    </p:column>
+                    
+                     <p:column headerText="Livro" sortBy="#{lista. tbLivroidtbLivro.titulo}" filterBy="#{lista. tbLivroidtbLivro.titulo}">
+                        <h:outputText value="#{lista. tbLivroidtbLivro.titulo}" />
+                    </p:column>
+
+                                    
+                    <p:column headerText="Opções" exportable="false">
+                        <center>
+                            
+                            <p:commandButton icon="ui-icon-pencil" value="Editar" onclick="PF('record').show();"> 
+                                <f:setPropertyActionListener target="#{exemplarBean.exemplar}" value="#{lista}" />
+                            </p:commandButton>
+                            
+                            <p:commandButton icon="ui-icon-trash" value="Deletar" onclick="PF('remove').show();"> 
+                                <f:setPropertyActionListener target="#{exemplarBean.exemplar}" value="#{lista}" />
+                            </p:commandButton> 
+                        
+                        </center>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+            <br/>
+            
+            <p:column>
+                <p:commandButton icon="ui-icon-plus" value="Novo" onclick="PF('record').show();">  
+                </p:commandButton> 
+            </p:column>
+            
+            <div align="center">
+                <h3>Exportar dados da página</h3>
+
+                <h:commandLink id="excel">
+                    <p:graphicImage name="./images/exports/excel.png" />
+                    <p:dataExporter type="xls" target="tabelaExemplares" fileName="exemplares" postProcessor="#{exemplarBean.postProcessXLS}" />
+                </h:commandLink>
+
+                <h:commandLink id="pdf">
+                    <p:graphicImage name="./images/exports/pdf.png" />
+                    <p:dataExporter type="pdf" target="tabelaExemplares" fileName="exemplares" preProcessor="#{exemplarBean.preProcessPDF}" />
+                </h:commandLink>
+
+
+                <h:commandLink>
+                    <p:graphicImage name="./images/exports/csv.png" width="24"/>
+                    <p:dataExporter type="csv" target="tabelaExemplares" fileName="exemplares" />
+                </h:commandLink>
+
+                <h:commandLink>
+                    <p:graphicImage  name="./images/exports/xml.png" width="24"/>
+                    <p:dataExporter type="xml" target="tabelaExemplares" fileName="exemplares" />
+                </h:commandLink>
+            </div>
+
+            <p:confirmDialog global="true">  
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />  
+            </p:confirmDialog>  
+
+
+            <p:dialog header="Novo" widgetVar="record" modal="true" focus="name">
+                <p:panelGrid id="panelRecord" columns="2"> 
+                    <!--Código:
+                    <p:inputText id="cod" value="#{exemplarBean.exemplar.idtbExemplar}" /-->
+                   Circular:
+                    <p:inputText id="name" value="#{exemplarBean.exemplar.circular}" />
+                  
+                    Livro:
+                    <p:selectOneMenu id="idtbAssunto" value="#{exemplarBean.exemplar.tbLivroidtbLivro}" style="width:125px" converter ="ExemplarConverter">
+                                     <f:selectItem itemLabel="-Selecione um Livro" itemValue="0"/>
+                                     <f:selectItems value="#{livroBean.livros}" var="l" itemValue="#{l}" itemLabel="#{l.titulo}"/>
+                    </p:selectOneMenu> 
+                    
+                </p:panelGrid>  
+                <br/>
+                <p:commandButton value="Salvar" actionListener="#{exemplarBean.record}" onclick="record.hide()" alt="Record"/> 
+            </p:dialog>
+            
+            <p:dialog header="Deletar" widgetVar="remove" modal="false"> 
+                Você tem certeza?
+                <p:commandButton value="Deletar" actionListener="#{exemplarBean.exclude}" onclick="remove.hide()" alt="Delete" /> 
+            </p:dialog>
+            
+        </h:form>
+    </ui:define>
+</ui:composition>

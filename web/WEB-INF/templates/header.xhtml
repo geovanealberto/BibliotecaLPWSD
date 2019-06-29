@@ -1,0 +1,27 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    <header>
+        <h1>LPWSD</h1>
+        <h:form>  
+            <p:menubar>
+                <p:menuitem value="Início" icon="ui-icon-home" url="/faces/index.xhtml" />
+
+                <p:submenu label="Gerenciar" icon="ui-icon-gear">
+                    <p:menuitem value="Assuntos" icon="ui-icon-person" url="/faces/assuntos.xhtml"/>
+                    <p:menuitem value="Autores" icon="ui-icon-person" url="/faces/autores.xhtml"/>
+                    <p:menuitem value="Editoras" icon="ui-icon-person" url="/faces/editoras.xhtml"/>
+                    <p:menuitem value="Usuarios" icon="ui-icon-person" url="/faces/usuarios.xhtml"/>
+                    <p:menuitem value="Livros" icon="ui-icon-person" url="/faces/livros.xhtml"/>
+                    <p:menuitem value="Exemplares" icon="ui-icon-person" url="/faces/exemplares.xhtml"/>
+                    <p:menuitem value="Emprestimos" icon="ui-icon-person" url="/faces/emprestimos.xhtml"/>
+                </p:submenu> 
+                    
+                <p:menuitem value="Sair" icon="ui-icon-power" action="#{usuarioBean.logout()}" ajax="false" />
+            </p:menubar>
+        </h:form>
+    </header>
+</ui:composition>

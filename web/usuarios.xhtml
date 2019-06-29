@@ -1,0 +1,112 @@
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h2 class="page-header">Gerenciar Usuarios</h2>
+        <br/>
+        <h:form id="formPrincipal">
+            <div align="center">
+                
+                <p:dataTable var="lista" value="#{usuarioBean.usuarios}"
+                             id="tabelaUsuario" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
+
+                       <p:column headerText="Código" sortBy="#{lista.idtbUsuario}" filterBy="#{lista.idtbUsuario}">
+                        <h:outputText value="#{lista.idtbUsuario}" />
+                    </p:column>
+                                                      
+                    <p:column headerText="Nome" sortBy="#{lista.nomeUsuario}" filterBy="#{lista.nomeUsuario}">
+                        <h:outputText value="#{lista.nomeUsuario}" />
+                    </p:column>
+                  
+                      <p:column headerText="Email" sortBy="#{lista.email}" filterBy="#{lista.email}">
+                        <h:outputText value="#{lista.email}" />
+                    </p:column>
+                    
+                    <p:column headerText="Senha" sortBy="#{lista.senha}" filterBy="#{lista.senha}">
+                        <h:outputText value="#{lista.senha}" />
+                    </p:column>
+                    
+                    <p:column headerText="Opções" exportable="false">
+                        <center>
+                            
+                            <p:commandButton icon="ui-icon-pencil" value="Editar" onclick="PF('record').show();"> 
+                                <f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{lista}" />
+                            </p:commandButton>
+                            
+                            <p:commandButton icon="ui-icon-trash" value="Deletar" onclick="PF('remove').show();"> 
+                                <f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{lista}" />
+                            </p:commandButton> 
+                        
+                        </center>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+            <br/>
+            
+            <p:column>
+                <p:commandButton icon="ui-icon-plus" value="Novo" onclick="PF('record').show();">  
+                </p:commandButton> 
+            </p:column>
+            
+            <div align="center">
+                <h3>Exportar dados da página</h3>
+
+                <h:commandLink id="excel">
+                    <p:graphicImage name="./images/exports/excel.png" />
+                    <p:dataExporter type="xls" target="tabelaUsuario" fileName="usuarios" postProcessor="#{usuarioBean.postProcessXLS}" />
+                </h:commandLink>
+
+                <h:commandLink id="pdf">
+                    <p:graphicImage name="./images/exports/pdf.png" />
+                    <p:dataExporter type="pdf" target="tabelaUsuario" fileName="usuarios" preProcessor="#{usuarioBean.preProcessPDF}" />
+                </h:commandLink>
+
+
+                <h:commandLink>
+                    <p:graphicImage name="./images/exports/csv.png" width="24"/>
+                    <p:dataExporter type="csv" target="tabelaUsuario" fileName="usuarios" />
+                </h:commandLink>
+
+                <h:commandLink>
+                    <p:graphicImage  name="./images/exports/xml.png" width="24"/>
+                    <p:dataExporter type="xml" target="tabelaUsuario" fileName="usuarios" />
+                </h:commandLink>
+            </div>
+
+            <p:confirmDialog global="true">  
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />  
+            </p:confirmDialog>  
+
+
+            <p:dialog header="Novo" widgetVar="record" modal="true" focus="name">
+                <p:panelGrid id="panelRecord" columns="2"> 
+                    <!--Código:
+                    <p:inputText id="cod" value="#{usuarioBean.usuario.idtbUsuario}" /-->
+                    
+                    Nome:
+                    <p:inputText id="name" value="#{usuarioBean.usuario.nomeUsuario}" />
+                     Email:
+                    <p:inputText id="email" value="#{usuarioBean.usuario.email}" />
+                   Senha:
+                    <p:inputText id="senha" value="#{usuarioBean.usuario.senha}" />
+                </p:panelGrid>  
+                <br/>
+                <p:commandButton value="Salvar" actionListener="#{usuarioBean.record}" onclick="record.hide()" alt="Record"/> 
+            </p:dialog>
+            
+            <p:dialog header="Deletar" widgetVar="remove" modal="false"> 
+                Você tem certeza?
+                <p:commandButton value="Deletar" actionListener="#{usuarioBean.exclude}" onclick="remove.hide()" alt="Delete" /> 
+            </p:dialog>
+            
+        </h:form>
+    </ui:define>
+</ui:composition>
