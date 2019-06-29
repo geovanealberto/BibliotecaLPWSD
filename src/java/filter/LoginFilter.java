@@ -77,20 +77,20 @@ public class LoginFilter implements Filter {
             HttpSession sess = ((HttpServletRequest)request).getSession(false);
             String paginaAcessada = ((HttpServletRequest)request).getRequestURI();
             
-            TbUsuario user = null;
+            TbUsuario usuarioLogado = null;
             
             if (sess != null)
-                user = (TbUsuario)sess.getAttribute("usuario");
+                usuarioLogado = (TbUsuario)sess.getAttribute("usuario");
             
             if (!"/LPWSD/faces/login.xhtml".equals(paginaAcessada))
             {
-                if (user == null) {
+                if (usuarioLogado == null) {
                     ((HttpServletResponse)response).sendRedirect("/LPWSD/faces/login.xhtml");
                 }
             }
             else
             {
-                if (user != null) {
+                if (usuarioLogado != null) {
                     ((HttpServletResponse)response).sendRedirect("/LPWSD");
                 }
             }

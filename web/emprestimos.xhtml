@@ -1,0 +1,93 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h2 class="page-header">Gerenciar Emprestimos</h2>
+        <br/>
+        <h:form id="formEmprestimos">
+            <div align="center">
+                
+                <p:dataTable var="lista" value="#{emprestimoBean.emprestimos}"
+                             id="tabelaEmprestimo" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
+
+                    <p:column headerText="ID" sortBy="#{lista.idtbEmprestimo}" filterBy="#{lista.idtbEmprestimo}">
+                        <h:outputText value="#{lista.idtbEmprestimo}" />
+                    </p:column>
+                    
+                    <p:column headerText="Data" sortBy="#{lista.dataEmprestimo}" filterBy="#{lista.dataEmprestimo}">
+                        <h:outputText value="#{lista.dataEmprestimo}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Exemplar" sortBy="#{lista.tbExemplaridtbExemplar.circular}" filterBy="#{lista.tbExemplaridtbExemplar.circular}">
+                        <h:outputText value="#{lista.tbExemplaridtbExemplar.circular}" />
+                    </p:column>
+                    
+                    <p:column headerText="Usuario" sortBy="#{lista.tbUsuarioidtbUsuario.nomeUsuario}" filterBy="#{lista.tbUsuarioidtbUsuario.nomeUsuario}">
+                        <h:outputText value="#{lista.tbUsuarioidtbUsuario.nomeUsuario}" />
+                    </p:column>
+                    
+                    <p:column headerText="Opções" exportable="false">
+                        <center>
+                            
+                            <p:commandButton icon="ui-icon-pencil" value="Editar" onclick="PF('record').show();"> 
+                                <f:setPropertyActionListener target="#{emprestimoBean.emprestimo}" value="#{lista}" />
+                            </p:commandButton>
+                            
+                            <p:commandButton icon="ui-icon-trash" value="Deletar" onclick="PF('remove').show();"> 
+                                <f:setPropertyActionListener target="#{emprestimoBean.emprestimo}" value="#{lista}" />
+                            </p:commandButton> 
+                        
+                        </center>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+            <br/>
+            
+            <p:column>
+                <p:commandButton icon="ui-icon-plus" value="Novo" onclick="PF('record').show();">  
+                </p:commandButton> 
+            </p:column>
+            
+            <p:confirmDialog global="true">  
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />  
+            </p:confirmDialog>  
+
+
+            <p:dialog header="Novo" widgetVar="record" modal="true" focus="titulo">
+                <p:panelGrid id="panelRecord" columns="2"> 
+                    <!--Código:
+                    <p:inputText id="cod" value="#{emprestimoBean.emprestimo.idtbEmprestimo}" /-->
+                    Data:
+                    <p:calendar id="titulo" value="#{emprestimoBean.emprestimo.dataEmprestimo}" />
+                    Exemplar:
+                    <p:selectOneMenu id="exem" value="#{emprestimoBean.emprestimo.tbExemplaridtbExemplar}" style="width: 100%;" converter="EmprestimoConverterExemplar">
+                        <f:selectItem itemLabel="Selecione" itemValue="" />
+                        <f:selectItems value="#{exemplarBean.exemplares}" var="exem" itemLabel="#{exem.circular}" itemValue="#{exem}" />
+                    </p:selectOneMenu>
+                    Usuário:
+                    <p:selectOneMenu id="user" value="#{emprestimoBean.emprestimo.tbUsuarioidtbUsuario}" style="width: 100%;" converter="EmprestimoConverterUsuario">
+                        <f:selectItem itemLabel="Selecione" itemValue="" />
+                        <f:selectItems value="#{usuarioBean.usuarios}" var="user" itemLabel="#{user.nomeUsuario}" itemValue="#{user}" />
+                    </p:selectOneMenu>
+                </p:panelGrid>  
+                <br/>
+                <p:commandButton value="Salvar" actionListener="#{emprestimoBean.record}" onclick="record.hide()" alt="Record"/> 
+            </p:dialog>
+            
+            <p:dialog header="Deletar" widgetVar="remove" modal="false"> 
+                Você tem certeza?
+                <p:commandButton value="Deletar" actionListener="#{emprestimoBean.exclude}" onclick="remove.hide()" alt="Delete" /> 
+            </p:dialog>
+            
+        </h:form>
+    </ui:define>
+</ui:composition>

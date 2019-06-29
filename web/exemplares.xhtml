@@ -90,7 +90,7 @@
                     <p:inputText id="name" value="#{exemplarBean.exemplar.circular}" />
                   
                     Livro:
-                    <p:selectOneMenu id="idtbAssunto" value="#{exemplarBean.exemplar.tbLivroidtbLivro}" style="width:125px" converter ="ExemplarConverter">
+                    <p:selectOneMenu id="idtbAssunto" value="#{exemplarBean.exemplar.tbLivroidtbLivro}" style="width:125px" converter ="ExemplarConverterLivro">
                                      <f:selectItem itemLabel="-Selecione um Livro" itemValue="0"/>
                                      <f:selectItems value="#{livroBean.livros}" var="l" itemValue="#{l}" itemLabel="#{l.titulo}"/>
                     </p:selectOneMenu> 

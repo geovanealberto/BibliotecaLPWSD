@@ -32,7 +32,9 @@
                     </p:column>
                     
                     <p:column headerText="Ano" sortBy="#{lista.ano}" filterBy="#{lista.ano}">
-                        <h:outputText value="#{lista.ano}" />
+                        <h:outputText value="#{lista.ano}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
                     </p:column>
                     
                     <p:column headerText="Assunto" sortBy="#{lista.tbAssuntoaidtbAssunto.nomeAssunto}" filterBy="#{lista.tbAssuntoaidtbAssunto.nomeAssunto}">
@@ -113,7 +115,7 @@
                     <p:calendar id="ano" value="#{livroBean.livro.ano}" />
                     
                     Assunto:
-                    <p:selectOneMenu id="idtbAssunto" value="#{livroBean.livro.tbAssuntoidtbAssunto}" style="width:125px" converter ="LivroConverter">
+                    <p:selectOneMenu id="idtbAssunto" value="#{livroBean.livro.tbAssuntoidtbAssunto}" style="width:125px" converter ="LivroConverterAssunto">
                                      <f:selectItem itemLabel="-Selecione um Assunto" itemValue="0"/>
                                      <f:selectItems value="#{assuntoBean.assuntos}" var="a" itemValue="#{a}" itemLabel="#{a.nomeAssunto}"/>
                     </p:selectOneMenu>        

@@ -10,13 +10,13 @@
             <div style="width: 400px; margin: auto; margin-top: 100px;">
                 <p:panel style="text-align: center;">
                     <f:facet name="header">Login</f:facet>
-                    <h:panelGrid columns="2" width="100%" style="margin-bottom: 20px; margin-top: 10px;">
+                    <h:panelGrid columns="2" width="100%" style="margin-bottom: 40px; margin-top: 40px;">
                         Login:
                         <h:inputText id="txtLogin" value="#{usuarioBean.usuario.email}" required="true" label="Login"
-                            style="#{ component.valid ? '' : 'border-color:red;'}"/>
+                            style="#{ component.valid ? '' : 'border-color:yellow;'}"/>
                         Senha:
                         <h:inputSecret id="txtSenha" value="#{usuarioBean.usuario.senha}" required="true" label="Senha"
-                            style="#{ component.valid ? '' : 'border-color:red;'}"/>
+                            style="#{ component.valid ? '' : 'border-color:yellow;'}"/>
                     </h:panelGrid>
                     <p:commandButton value="Logar" action="#{usuarioBean.login()}" ajax="false"/>
                 </p:panel>
